@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Button } from 'react-native-elements';
 import Expo, { Asset, Audio, FileSystem, Permissions } from 'expo';
 
 export default class App extends React.Component {
@@ -92,11 +91,15 @@ export default class App extends React.Component {
     this.setState({
       isLoading: true,
     });
+
+    // Clear sound
+
     if (this.sound !== null) {
       await this.sound.unloadAsync();
       this.sound.setOnPlaybackStatusUpdate(null);
       this.sound = null;
     }
+
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: true,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -104,6 +107,9 @@ export default class App extends React.Component {
       shouldDuckAndroid: true,
       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
     });
+
+    // Clear recording
+
     if (this.recording !== null) {
       this.recording.setOnRecordingStatusUpdate(null);
       this.recording = null;
@@ -199,26 +205,15 @@ export default class App extends React.Component {
   }
 
   render() {
+
+    let { isRecording } = this.state;
+
+    console.log(isRecording)
+
     return (
       <View style={styles.container}>
-        <Button
-            large
-            backgroundColor="#ccc"
-            color="#000"
-            borderRadius={50}
-            containerViewStyle={{marginBottom: 20}}
-            onPress={() => this._onRecordPressed()}
-            title={'Record'}
-        />
-        <Button
-            large
-            backgroundColor="#ccc"
-            color="#000"
-            borderRadius={50}
-            containerViewStyle={{marginBottom: 20}}
-            onPress={() => this._onPlayPausePressed()}
-            title={'Play'}
-        />
+        <TouchableOpacity onPress={() => this._onRecordPressed()} style={styles.record} />
+        <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.play} />
       </View>
     );
   }
@@ -227,11 +222,14 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff'
   },
-  button: {
-    backgroundColor: '#ccc',
+  record: {
+    flex: 1,
+    backgroundColor: '#e04a4a'
+  },
+  play: {
+    flex: 1,
+    backgroundColor: '#5ee04a'
   }
 });
