@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
 import Expo, { Asset, Audio, FileSystem, Permissions } from 'expo';
 
 export default class App extends React.Component {
@@ -25,6 +25,7 @@ export default class App extends React.Component {
       shouldCorrectPitch: true,
       volume: 1.0,
       rate: 1.0,
+      fadeAnim: new Animated.Value(0)
     };
   }
 
@@ -163,6 +164,15 @@ export default class App extends React.Component {
 
   _onRecordPressed = () => {
     console.log("fds");
+
+    Animated.timing(
+      this.state.fadeAnim,
+      {
+          toValue: 1,
+          duration: 500
+      }
+    ).start();
+
     if (this.state.isRecording) {
       this._enablePlayback();
     } else {
@@ -206,14 +216,17 @@ export default class App extends React.Component {
 
   render() {
 
-    let { isRecording } = this.state;
+    let { isRecording, isPlaying } = this.state;
 
-    console.log(isRecording)
+    console.log("Is recording: ", isRecording)
+    console.log("Is playing: ", isPlaying)
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => this._onRecordPressed()} style={styles.record} />
-        <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.play} />
+        {isRecording ? <TouchableOpacity onPress={() => this._onRecordPressed()} style={styles.recordActive} /> : <TouchableOpacity onPress={() => this._onRecordPressed()} style={styles.record} /> }
+        
+        {isPlaying ? <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.playActive} /> : <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.play} /> }
+        
       </View>
     );
   }
@@ -228,8 +241,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#e04a4a'
   },
+  recordActive: {
+    flex: 4,
+    backgroundColor: '#e04a4a'
+  },
   play: {
     flex: 1,
+    backgroundColor: '#5ee04a'
+  },
+  playActive: {
+    flex: 4,
     backgroundColor: '#5ee04a'
   }
 });
