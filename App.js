@@ -163,8 +163,7 @@ export default class App extends React.Component {
   }
 
   _onRecordPressed = () => {
-    console.log("fds");
-
+    
     Animated.timing(
       this.state.fadeAnim,
       {
@@ -216,16 +215,16 @@ export default class App extends React.Component {
 
   render() {
 
-    let { isRecording, isPlaying } = this.state;
-
-    console.log("Is recording: ", isRecording)
-    console.log("Is playing: ", isPlaying)
+    let { isRecording, isPlaying, soundDuration } = this.state;
+    //console.log(soundDuration)
+    //console.log("Is recording: ", isRecording)
+    //console.log("Is playing: ", isPlaying)
 
     return (
       <View style={styles.container}>
         {isRecording ? <TouchableOpacity onPress={() => this._onRecordPressed()} style={styles.recordActive} /> : <TouchableOpacity onPress={() => this._onRecordPressed()} style={styles.record} /> }
         
-        {isPlaying ? <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.playActive} /> : <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.play} /> }
+        {isPlaying ? <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.playActive}><Text>Duration: {soundDuration} ms</Text><Text>BPM: {parseInt(60000/soundDuration)}</Text></TouchableOpacity> : <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.play} /> }
         
       </View>
     );
