@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing } from 'react-native';
 import Expo, { Asset, Audio, FileSystem, Permissions } from 'expo';
 
 export default class App extends React.Component {
@@ -10,6 +10,7 @@ export default class App extends React.Component {
     this.sound = null;
     //this.isSeeking = false;
     //this.shouldPlayAtEndOfSeek = false;
+    this.animTest = new Animated.Value(0);
     this.state = {
       haveRecordingPermissions: false,
       isLoading: false,
@@ -184,6 +185,9 @@ export default class App extends React.Component {
       if (this.state.isPlaying) {
         this.sound.pauseAsync();
       } else {
+
+        this.startAnim()
+
         this.sound.playAsync();
       }
     }
@@ -201,6 +205,18 @@ export default class App extends React.Component {
     }
   };
 
+  startAnim() {
+    this.animTest.setValue(0)
+    Animated.timing(
+      this.animTest,
+      {
+        toValue: 1,
+        duration: this.state.soundDuration,
+        easing: Easing.linear
+      }
+    ).start(() => this.startAnim())
+  }
+
   doStuff() {
     console.log("HEJ");
     /*const recording = new Expo.Audio.Recording();
@@ -215,8 +231,16 @@ export default class App extends React.Component {
 
   render() {
 
-    let { isRecording, isPlaying, soundDuration } = this.state;
-    //console.log(soundDuration)
+    let { isRecording, isPlaying, soundDuration, soundPosition } = this.state;
+    console.log(soundDuration)
+
+
+    const animTest = this.animTest.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg']
+    })
+
+
     //console.log("Is recording: ", isRecording)
     //console.log("Is playing: ", isPlaying)
 
@@ -224,7 +248,15 @@ export default class App extends React.Component {
       <View style={styles.container}>
         {isRecording ? <TouchableOpacity onPress={() => this._onRecordPressed()} style={styles.recordActive} /> : <TouchableOpacity onPress={() => this._onRecordPressed()} style={styles.record} /> }
         
-        {isPlaying ? <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.playActive}><Text>Duration: {soundDuration} ms</Text><Text>BPM: {parseInt(60000/soundDuration)}</Text></TouchableOpacity> : <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.play} /> }
+        {isPlaying ? 
+          <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.playActive}>
+            <Animated.View style={{backgroundColor: '#009999', height: 300, width: 300, transform: [{rotate: animTest}]}}></Animated.View>
+            <Text>Duration: {soundDuration} ms</Text>
+            <Text>BPM: {parseInt(60000/soundDuration)}</Text>
+            <Text>Position: {soundPosition} ms</Text>
+          </TouchableOpacity>
+          :
+          <TouchableOpacity onPress={() => this._onPlayPausePressed()} style={styles.play} /> }
         
       </View>
     );

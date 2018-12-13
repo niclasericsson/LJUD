@@ -1,5 +1,23 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "name": "LJUD",
+    "description": "Make fun sounds and create loops",
+    "primaryColor": "#d65b5b",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "ios": {
+      "bundleIdentifier": "NOT_SET",
+      "supportsTablet": true,
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "NOT_SET",
+      "versionCode": 1
+    },
+    "splash": {
+      "backgroundColor": "#51b6b6",
+      "image": "./assets/splash.png"
+    }
   }
 }
