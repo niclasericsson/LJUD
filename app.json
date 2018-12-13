@@ -4,7 +4,7 @@
     "name": "LJUD",
     "description": "Make fun sounds and create loops",
     "icon": "./assets/appicon.png",
-    "primaryColor": "#d65b5b",
+    "primaryColor": "#51b6b6",
     "orientation": "portrait",
     "version": "1.0.0",
     "ios": {
