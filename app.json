@@ -7,12 +7,12 @@
     "orientation": "portrait",
     "version": "1.0.0",
     "ios": {
-      "bundleIdentifier": "NOT_SET",
+      //"bundleIdentifier": "NOT_SET",
       "supportsTablet": true,
       "buildNumber": "1"
     },
     "android": {
-      "package": "NOT_SET",
+      //"package": "NOT_SET",
       "versionCode": 1
     },
     "splash": {
