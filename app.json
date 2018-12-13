@@ -3,6 +3,7 @@
     "sdkVersion": "27.0.0",
     "name": "LJUD",
     "description": "Make fun sounds and create loops",
+    "icon": "./assets/appicon.png",
     "primaryColor": "#d65b5b",
     "orientation": "portrait",
     "version": "1.0.0",
