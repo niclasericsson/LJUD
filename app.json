@@ -1,9 +1,9 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0",
+    "sdkVersion": "32.0.0",
     "name": "LJUD",
     "description": "Make fun sounds and create loops",
-    "icon": "./assets/appicon.png",
+    "icon": "./assets/icon.png",
     "primaryColor": "#51b6b6",
     "orientation": "portrait",
     "version": "1.0.0",
@@ -19,6 +19,12 @@
     "splash": {
       "backgroundColor": "#51b6b6",
       "image": "./assets/splash.png"
-    }
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
   }
 }
